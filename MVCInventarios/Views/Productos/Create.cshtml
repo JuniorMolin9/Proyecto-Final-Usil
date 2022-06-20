@@ -1,0 +1,61 @@
+﻿@model MVCInventarios.ViewModels.AgregarEditarProductoViewModel
+
+@{
+    ViewData["Title"] = "Crear Producto";
+}
+<h4>@ViewData["Title"]</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Producto.Nombre" class="control-label"></label>
+                <input asp-for="Producto.Nombre" class="form-control" />
+                <span asp-validation-for="Producto.Nombre" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Producto.Descripcion" class="control-label"></label>
+                <input asp-for="Producto.Descripcion" class="form-control" />
+                <span asp-validation-for="Producto.Descripcion" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <label asp-for="Producto.MarcaId" class="control-label"></label>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect01">
+                        <i class="fa-solid fa-m"></i>
+                    </label>
+                    <select asp-for="Producto.MarcaId" class="form-select" asp-items="Model.ListadoMarcas">
+                        <option value="">---Seleccionar Marca---</option>
+                    </select>
+                </div>
+                <span asp-validation-for="Producto.MarcaId" class="text-danger"></span>
+            </div>            
+            <div class="form-group">
+                <label asp-for="Producto.Costo" class="control-label"></label>
+                <input asp-for="Producto.Costo" class="form-control" />
+                <span asp-validation-for="Producto.Costo" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <label asp-for="Producto.Estatus" class="control-label"></label>
+                <div class="input-group mb-3">
+                    <label class="input-group-text" for="inputGroupSelect02">
+                        <i class="fa-solid fa-book-open"></i>
+                    </label>
+                    <select asp-for="Producto.Estatus" class="form-select" 
+                            asp-items="Html.GetEnumSelectList<EstatusProducto>()">
+                        <option value="">---Seleccionar Estatus---</option>
+                    </select>
+                </div>
+                <span asp-validation-for="Producto.Estatus" class="text-danger"></span>
+            </div>
+            <div class="form-group mt-3">
+                <partial name="Acciones/_Create" />
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

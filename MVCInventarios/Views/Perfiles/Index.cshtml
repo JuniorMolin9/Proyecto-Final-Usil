@@ -1,0 +1,81 @@
+﻿@using MVCInventarios.ViewModels
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+@model ListadoViewModel<Perfil>
+
+@{
+    ViewData["Title"] = "Perfiles";
+}
+
+<p class="text-end">
+    @Model.Total registros
+</p>
+<hr />
+<div class="row mb-3">
+    <div class="col-md-6">
+        <a class="btn btn-primary" asp-action="AgregarEditar">
+            <i class="fa-solid fa-add"></i>&nbsp;@Model.TituloCrear
+        </a>
+    </div>
+    <div class="col-md-6">
+        <form>
+            <div class="row">
+                <div class="input-group">
+                    <input asp-for="TerminoBusqueda" class="form-control"
+                           placeholder="Término de Búsqueda" aria-label="Término de Búsqueda" />
+                    <button class="btn btn-info" name="botonBusqueda" id="botonBusqueda"
+                            type="submit">
+                        <i class="fa-solid fa-magnifying-glass"></i>&nbsp;Buscar
+                    </button>
+                    <a class="btn btn-secondary" asp-action="Index">
+                        <i class="fa-solid fa-arrows-rotate"></i>&nbsp;Limpiar
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<table class="table table-hover table-bordered table-striped">
+    <thead class="bg-primary text-white">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Registros[0].Nombre)
+            </th>
+            <th class="text-center">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Registros)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Nombre)
+                </td>
+                <td class="text-center">
+                    <a asp-action="AgregarEditar" asp-route-id="@item.Id"
+                   class="btn btn-secondary">
+                        <i class="fa-solid fa-pen-to-square"></i>&nbsp;Editar
+                    </a>
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">
+                        <i class="fa-solid fa-rectangle-list"></i>&nbsp;Detalles
+                    </a>
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">
+                        <i class="fa-solid fa-trash"></i>&nbsp;Eliminar
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@Html.PagedListPager(Model.Registros,page=>Url.Action("Index", new {
+    Pagina=page,
+    TerminoBusqueda=Model.TerminoBusqueda
+}),
+    new PagedListRenderOptions{
+        LiElementClasses = new string[]{"page-item"},
+        PageClasses = new string[]{"page-link"}
+    }
+)

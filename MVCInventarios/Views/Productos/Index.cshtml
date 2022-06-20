@@ -1,0 +1,67 @@
+﻿@using MVCInventarios.ViewModels
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+@model ListadoViewModel<Producto>
+
+@{
+    ViewData["Title"] = "Productos";
+}
+
+<partial name="Acciones/_CrearBusqueda" model="Model.CrearBusquedaViewModel()" />
+
+
+<table class="table table-hover table-bordered table-striped">
+    <thead class="bg-primary text-white">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Registros[0].Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Registros[0].Descripcion)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Registros[0].Marca)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Registros[0].Costo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Registros[0].Estatus)
+            </th>
+            <th class="text-center">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Registros) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Descripcion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Marca.Nombre)
+            </td>
+            <td>
+                @String.Format("{0:c}",item.Costo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Estatus)
+            </td>
+            <td class="text-center">
+               <partial name="Acciones/_Crud" model="item.Id" />
+            </td>
+        </tr>}
+    </tbody>
+</table>
+
+@Html.PagedListPager(Model.Registros,page=>Url.Action("Index",new {
+    Pagina = page,
+    TerminoBusqueda=Model.TerminoBusqueda
+}),
+    new PagedListRenderOptions{
+        LiElementClasses = new string[]{"page-item"},
+        PageClasses = new string[]{"page-link"}
+    }
+)

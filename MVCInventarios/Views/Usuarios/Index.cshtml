@@ -1,0 +1,77 @@
+﻿@using MVCInventarios.ViewModels
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+@model ListadoViewModel<Usuario>
+
+@{
+    ViewData["Title"] = "Usuarios";
+}
+
+<partial name="Acciones/_CrearBusqueda" model="Model.CrearBusquedaViewModel()" />
+
+<table class="table table-hover table-bordered table-striped">
+    <thead class="bg-primary text-white">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Registros[0].Nombre)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Registros[0].Apellidos)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Registros[0].Username)
+            </th>            
+            <th>
+                @Html.DisplayNameFor(model => model.Registros[0].CorreoElectronico)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Registros[0].Celular)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Registros[0].Perfil)
+            </th>
+            <th class="text-center">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Registros) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Apellidos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Username)
+            </td>            
+            <td>
+                @Html.DisplayFor(modelItem => item.CorreoElectronico)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Celular)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Perfil.Nombre)
+            </td>
+            <td>
+                <partial name="Acciones/_Crud" model="@item.Id" />                
+                <a asp-action="CambiarContrasena" asp-route-id="@item.Id"
+                    class="btn btn-warning">
+                        <i class="fa-solid fa-key"></i>&nbsp;Contrase&ntilde;a
+                </a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@Html.PagedListPager(Model.Registros,page=>Url.Action("Index", new {
+    Pagina=page,
+    TerminoBusqueda=Model.TerminoBusqueda
+}),
+    new PagedListRenderOptions{
+        LiElementClasses = new string[]{"page-item"},
+        PageClasses = new string[]{"page-link"}
+    }
+)

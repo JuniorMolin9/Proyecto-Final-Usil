@@ -1,0 +1,54 @@
+﻿@using MVCInventarios.ViewModels
+@model LoginViewModel
+@{
+    Layout = "_LayoutBasic";
+    ViewData["Title"] = "Acceder";    
+}
+<main class="container-fluid px-1 px-md-5 px-lg-1 px-xl-5 py-5 mx-auto">
+    <div class="row d-flex">
+        <div class="col-lg-6  d-flex justify-content-center align-items-center">
+            <div class="card1 pb-5">
+                <i class="fa-solid fa-user-lock fa-9x text-primary"></i>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="card border-0 px-4 py-5">
+                <form id="account" method="post">
+                    <h4 class="bg-primary p-3 text-white text-center">Acceder</h4>
+                    <hr />
+                    <div asp-validation-summary="All" class="text-danger"></div>
+                    <input type="hidden" asp-for="ReturnUrl" />
+                    <div class="form-group">
+                        <label asp-for="Username"></label>
+                        <input asp-for="Username" class="form-control" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Password"></label>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+                    <div class="form-check mt-3">
+                        <div class="checkbox">
+                            <label asp-for="Recordarme" class="form-check-label" >
+                                <input asp-for="Recordarme"  class="form-check-input"/>
+                                @Html.DisplayNameFor(m => m.Recordarme)
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group d-flex justify-content-center">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="fa-solid fa-sign-in-alt"></i> Acceder
+                        </button>
+                    </div>                    
+                </form>
+            </div>
+        </div>
+    </div>
+
+</main>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+

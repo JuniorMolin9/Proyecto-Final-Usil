@@ -1,0 +1,31 @@
+﻿@using MVCInventarios.ViewModels
+@model CrearBusquedaViewModel
+<p class="text-end">
+    @Model.Total registros
+</p>
+
+<hr />
+<div class="row mb-3">
+    <div class="col-md-6">
+        <a class="btn btn-primary" asp-action="Create">
+            <i class="fa-solid fa-add"></i>&nbsp;@Model.TituloCrear
+        </a>
+    </div>
+    <div class="col-md-6">
+        <form>
+            <div class="row">
+                <div class="input-group">
+                    <input asp-for="TerminoBusqueda" class="form-control"
+                    placeholder="Término de Búsqueda" aria-label="Término de Búsqueda"/>
+                    <button class="btn btn-info" name="botonBusqueda" id="botonBusqueda"
+                            type="submit">
+                        <i class="fa-solid fa-magnifying-glass"></i>&nbsp;Buscar
+                    </button>
+                    <a class="btn btn-secondary" asp-action="Index">
+                        <i class="fa-solid fa-arrows-rotate"></i>&nbsp;Limpiar
+                    </a>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+﻿@using MVCInventarios.ViewModels
+@using X.PagedList.Mvc.Core
+@using X.PagedList.Web.Common
+@model ListadoViewModel<Marca>
+
+@{
+    ViewData["Title"] = "Marcas";
+}
+
+<partial name="Acciones/_CrearBusqueda" model="Model.CrearBusquedaViewModel()" />
+
+@*@await Html.PartialAsync("Acciones/_CrearBusqueda",new CrearBusquedaViewModel{
+    TerminoBusqueda= Model.TerminoBusqueda,
+    TituloCrear="Crear Marca",
+    Total = Model.Total
+})*@
+
+<table class="table table-hover table-bordered table-striped">
+    <thead class="bg-primary text-white">
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Registros[0].Nombre)
+            </th>
+            <th class="text-center">Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Registros) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nombre)
+            </td>
+            <td class="text-center">
+                <partial name="Acciones/_Crud" model="@item.Id" />
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+
+@Html.PagedListPager(Model.Registros,page=>Url.Action("Index", new {
+    Pagina=page,
+    TerminoBusqueda=Model.TerminoBusqueda
+}),
+    new PagedListRenderOptions{
+        LiElementClasses = new string[]{"page-item"},
+        PageClasses = new string[]{"page-link"}
+    }
+)
